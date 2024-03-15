@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Encriptar y Desencriptar</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+            padding: 10px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input[type="text"], #resultado {
+            width: 100%;
+            max-width: 300px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            margin: 5px 5px 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            white-space: nowrap;
+        }
+
+        #resultado {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px dashed #333;
+            word-wrap: break-word;
+        }
+
+        #copy {
+            background-color: #28a745;
+        }
+
+        #copy:hover {
+            background-color: #218838;
+        }
+
+        @media (max-width: 400px) {
+            button {
+                padding: 10px;
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+
+        footer {
+            margin-top: auto; 
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background-color: #007bff;
+            color: white;
+            position: relative;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <h2>Encriptar y Desencriptar con JS</h2>
+
+    <input type="text" id="inputTexto" placeholder="Introduce texto aquí">
+    <button onclick="encriptar()">Encriptar</button>
+    <button onclick="desencriptar()">Desencriptar</button>
+    <button id="copy" onclick="copiarAlPortapapeles()">Copiar</button>
+
+    <p>Resultado: <span id="resultado"></span></p>
+
+    <footer>
+        Visita mi perfil de <a href="https://app.aluracursos.com/user/cincero7" target="_blank">AluraLATAN</a>.
+    </footer>
+
+    <script>
+        function encriptar() {
+            var texto = document.getElementById('inputTexto').value;
+            var textoEncriptado = CryptoJS.AES.encrypt(texto, "claveSecreta").toString();
+            document.getElementById('resultado').innerText = textoEncriptado;
+        }
+
+        function desencriptar() {
+            var textoEncriptado = document.getElementById('inputTexto').value;
+            var bytes  = CryptoJS.AES.decrypt(textoEncriptado, "claveSecreta");
+            var textoDesencriptado = bytes.toString(CryptoJS.enc.Utf8);
+            document.getElementById('resultado').innerText = textoDesencriptado;
+        }
+
+        function copiarAlPortapapeles() {
+            var texto = document.getElementById('resultado').innerText;
+            navigator.clipboard.writeText(texto).then(() => {
+                alert("Texto copiado al portapapeles");
+            }).catch(err => {
+                console.error('Error al copiar el texto: ', err);
+            });
+        }
+
+
+    function encriptar() {
+        var texto = document.getElementById('inputTexto').value;
+        var textoEncriptado = CryptoJS.AES.encrypt(texto, "claveSecreta").toString();
+        document.getElementById('resultado').innerText = textoEncriptado;
+       
+
+        document.getElementById('inputTexto').value = '';
+    }
+
+    function desencriptar() {
+        var textoEncriptado = document.getElementById('inputTexto').value;
+        var bytes  = CryptoJS.AES.decrypt(textoEncriptado, "claveSecreta");
+        var textoDesencriptado = bytes.toString(CryptoJS.enc.Utf8);
+        document.getElementById('resultado').innerText = textoDesencriptado;
+        
+        document.getElementById('inputTexto').value = '';
+    }
+
+    function copiarAlPortapapeles() {
+        var texto = document.getElementById('resultado').innerText;
+        navigator.clipboard.writeText(texto).then(() => {
+            alert("Texto copiado al portapapeles");
+        }).catch(err => {
+            console.error('Error al copiar el texto: ', err);
+        });
+    }
+
+    </script>
+</body>
+</html>
